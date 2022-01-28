@@ -12,11 +12,11 @@ pipeline {
                 sh 'mvn clean install -Dcheckstyle.skip -DskipTests=true'
             }
         }
-//         stage('Docker Build') {
-//             agent any
-//             steps {
-//                 sh 'docker build -t AlekseiVoron/spring-petclinic:latest .'
-//             }
-//         }
+        stage('Docker Build') {
+            agent any
+            steps {
+                sh 'docker build -t AlekseiVoron/spring-petclinic:latest .'
+            }
+        }
     }
 }
