@@ -30,8 +30,7 @@ pipeline {
         stage('Docker Run') {
             agent any
             steps {
-                ${container_id} = sh "docker run --name petclinic -d --publish 8080:8080 --network petclinic-run alekseivoron/spring-petclinic:latest"
-                sh 'docker exec ${container_id} curl "http://localhost:8080/"'
+                sh "docker run --name petclinic --publish 8080:8080 --network petclinic-run alekseivoron/spring-petclinic:latest curl 'http://localhost:8080/'"
             }
         }
     }
