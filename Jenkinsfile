@@ -15,7 +15,7 @@ pipeline {
         stage('Docker Build') {
             agent any
             steps {
-                sh 'docker build -t alekseivoron/spring-petclinic:latest .'
+                sh 'docker build --network petclinic-build -t alekseivoron/spring-petclinic:latest .'
             }
         }
         stage('Docker Push') {
@@ -25,6 +25,13 @@ pipeline {
                     sh "docker login -u ${env.dhUser} -p ${env.dhPassword}"
                     sh 'docker push alekseivoron/spring-petclinic:latest'
                 }
+            }
+        }
+        stage('Docker Run') {
+            agent any
+            steps {
+                ${container_id} = sh "docker run --name petclinic -d --publish 8080:8080 --network petclinic-run alekseivoron/spring-petclinic:latest"
+                sh 'docker exec ${container_id} curl "http://localhost:8080/"'
             }
         }
     }
