@@ -6,6 +6,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.6.0'
+                    args '--network=petclinic-build'
                 }
             }
             steps {
