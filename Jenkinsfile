@@ -29,11 +29,7 @@ pipeline {
             }
         }
         stage('Docker Run') {
-            agent {
-                docker {
-                    image 'maven:3.6.0'
-                }
-            }
+            agent any
             steps {
                 sh 'docker network create petclinic-run'
                 sh "docker run --name petclinic --publish 8080:8080 --network petclinic-run alekseivoron/spring-petclinic:latest curl 'http://localhost:8080/'"
