@@ -31,7 +31,13 @@ pipeline {
         stage('Docker Run') {
             agent any
             steps {
-                sh "docker run --name petclinic --rm --publish 8080:8080 --network petclinic-run alekseivoron/spring-petclinic:latest curl 'http://localhost:8080/'"
+                sh "docker run --name petclinic -d --rm --publish 8080:8080 --network petclinic-run alekseivoron/spring-petclinic:latest"
+            }
+        }
+        stage('Curl petclinic') {
+            agent any
+            steps {
+                sh 'curl http://localhost:8080/'
             }
         }
     }
